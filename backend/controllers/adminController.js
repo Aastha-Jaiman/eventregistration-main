@@ -78,7 +78,7 @@ exports.getAllusers = async (req, res) => {
         }
 
         const users = await User.find(filter)
-            .select('name email phone city companyName companyAddress role createdAt stallNumber')
+            .select('fullname email phone city companyName companyAddress role registrationNumber createdAt stallNumber')
             .sort({ createdAt: -1 })
             .lean();
 
