@@ -129,13 +129,10 @@ const Registration = ({
       setRegNumber(response.user.registrationNumber);
       console.log("response.user.registrationNumber", response.user.registrationNumber)
       console.log("registered user", response);
-      // setErrorRegNumber(err.registrationNumber || "Registration failed");
-      setErrorRegNumber(err?.response?.data?.registrationNumber || "");
-      setError(err?.response?.data?.message || "");
-
       setShowPopup(true);
     } catch (err) {
-      setError(err.message || "Registration failed");
+      setError(err?.response?.data?.message || "");
+      setErrorRegNumber(err?.response?.data?.registrationNumber || "");
     } finally {
       setLoading(false);
     }
