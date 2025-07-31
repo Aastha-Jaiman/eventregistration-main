@@ -10,8 +10,8 @@ const Header = () => {
         <div className="flex justify-between items-center">
           {/* Logo Section */}
           <div className="flex items-center space-x-2 sm:space-x-4">
-            <div className="hidden sm:block">
-              <h1 className="text-lg sm:text-xl font-bold text-gray-800 uppercase">
+            <div className="block">
+              <h1 className="text-base sm:text-xl font-bold text-gray-800 uppercase">
                 Jaipur Catering Dealers Samiti Registered
               </h1>
               <p className="text-xs sm:text-sm text-gray-500">
@@ -19,6 +19,7 @@ const Header = () => {
               </p>
             </div>
           </div>
+
 
           {/* Navigation */}
           <nav className="hidden md:flex items-center space-x-4 sm:space-x-8">
