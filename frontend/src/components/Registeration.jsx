@@ -123,19 +123,25 @@ const Registration = ({
 
     console.log("Submitting user data:", userData);
 
+
     try {
       const response = await registerUser(userData);
       setRegistrationId(response.registrationNumber);
       setRegNumber(response.user.registrationNumber);
       console.log("response.user.registrationNumber", response.user.registrationNumber)
       console.log("registered user", response);
-      setShowPopup(true);
+
+      if (response && response.success !== false) {
+        setShowPopup(true);
+      }
     } catch (err) {
-      setError(err?.response?.data?.message || "");
-      setErrorRegNumber(err?.response?.data?.registrationNumber || "");
+      setError(err.message || "Something went wrong");
+      setErrorRegNumber(err?.registrationNumber || "");
+      setShowPopup(false);
     } finally {
       setLoading(false);
     }
+
   }, [formData, registrations.length, setRegistrations, setShowPopup]);
 
   const handleClosePopup = useCallback(() => {
@@ -270,13 +276,15 @@ const Registration = ({
         {error && (
           <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
             <p className="text-red-600 text-center text-sm">{error}</p>
-            {regNumber && (
+            {errorregNumber && (
               <p className="text-red-600 text-center text-sm">
-                Registration Number: {regNumber}
+                Registration Number: {errorregNumber}
               </p>
             )}
           </div>
         )}
+
+
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-5">
