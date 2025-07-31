@@ -14,7 +14,7 @@ import AboutSection from "./About";
 
 export default function HeroPage() {
   return (
-    <div className="relative mt-20">
+    <div className="relative mt-10">
 
       {/* Logo Row - No Opacity Section */}
       {/* <div className="absolute left-0 right-0 z-20 bg-white shadow-md px-6 py-4 opacity-90">

@@ -21,6 +21,8 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   FileSpreadsheetIcon,
+  Hash,
+  Building2Icon,
 } from "lucide-react";
 
 const Dashboard = () => {
@@ -34,13 +36,17 @@ const Dashboard = () => {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
+
   const [filters, setFilters] = useState({
     role: "",
     city: "",
     companyName: "",
     startDate: "",
     endDate: "",
+    stallNumber: "",
+    registrationNumber: "",
   });
+
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -62,30 +68,34 @@ const Dashboard = () => {
     try {
       const exportData = users.map((user, index) => ({
         "S.No": index + 1,
-        // Email: user.email || "",
         Role: user.role || "",
         Phone: user.phone || "",
         City: user.city || "",
         "Company Name": user.companyName || "",
+        "Stall Number": user.stallNumber || "N/A",
+        "Registration Number": user.registrationNumber || "N/A",
         "Joined Date": user.createdAt
           ? new Date(user.createdAt).toLocaleDateString()
           : "",
         "User ID": user._id || "",
       }));
 
+
       const workbook = XLSX.utils.book_new();
       const worksheet = XLSX.utils.json_to_sheet(exportData);
 
       const columnWidths = [
-        { wch: 8 }, // S.No
-        { wch: 25 }, // Email
-        { wch: 12 }, // Role
-        { wch: 15 }, // Phone
-        { wch: 15 }, // City
-        { wch: 20 }, // Company Name
-        { wch: 15 }, // Joined Date
-        { wch: 25 }, // User ID
+        { wch: 8 },   // S.No
+        { wch: 12 },  // Role
+        { wch: 15 },  // Phone
+        { wch: 15 },  // City
+        { wch: 20 },  // Company Name
+        { wch: 15 },  // Stall Number
+        { wch: 20 },  // Registration Number
+        { wch: 15 },  // Joined Date
+        { wch: 25 },  // User ID
       ];
+
       worksheet["!cols"] = columnWidths;
 
       XLSX.utils.book_append_sheet(workbook, worksheet, "Users Data");
@@ -115,8 +125,12 @@ const Dashboard = () => {
   };
 
   const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
-    setFilters((prev) => ({ ...prev, companyName: e.target.value }));
+    const value = e.target.value;
+    setSearchTerm(value);
+    setFilters((prev) => ({
+      ...prev,
+      companyName: value,
+    }));
     setCurrentPage(1);
   };
 
@@ -275,7 +289,7 @@ const Dashboard = () => {
                   type="text"
                   value={searchTerm}
                   onChange={handleSearchChange}
-                  placeholder="Search by name, company, ID..."
+                  placeholder="Search by name, company, ID, Reg No., Stall No. ..."
                   className="w-full pl-12 pr-4 py-3 rounded-xl border border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 bg-blue-50/50 focus:bg-white"
                 />
               </div>
@@ -342,6 +356,35 @@ const Dashboard = () => {
                     name="startDate"
                     value={filters.startDate}
                     onChange={handleFilterChange}
+                    className="w-full px-4 py-2 rounded-lg border border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 bg-white/70"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="flex items-center space-x-2 text-sm font-medium text-blue-800">
+                    <Building2Icon className="w-4 h-4" />
+                    <span>Stall Number</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="stallNumber"
+                    value={filters.stallNumber}
+                    onChange={handleFilterChange}
+                    placeholder="Enter stall number"
+                    className="w-full px-4 py-2 rounded-lg border border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 bg-white/70"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="flex items-center space-x-2 text-sm font-medium text-blue-800">
+                    <Hash className="w-4 h-4" />
+                    <span>Registration No.</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="registrationNumber"
+                    value={filters.registrationNumber}
+                    onChange={handleFilterChange}
+                    placeholder="Enter registration number"
                     className="w-full px-4 py-2 rounded-lg border border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 bg-white/70"
                   />
                 </div>
@@ -481,6 +524,16 @@ const Dashboard = () => {
 
                       <th
                         className="px-6 py-4 text-left text-xs font-medium text-blue-800 uppercase tracking-wider cursor-pointer hover:bg-blue-200/50 transition-colors"
+                        onClick={() => handleSort("registrationNumber")}
+                      >
+                        <div className="flex items-center space-x-1">
+                          <span>Reg. No</span>
+                          <SortIcon column="registrationNumber" />
+                        </div>
+                      </th>
+
+                      <th
+                        className="px-6 py-4 text-left text-xs font-medium text-blue-800 uppercase tracking-wider cursor-pointer hover:bg-blue-200/50 transition-colors"
                         onClick={() => handleSort("stallNumber")}
                       >
                         <div className="flex items-center space-x-1">
@@ -530,10 +583,12 @@ const Dashboard = () => {
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-800">
                           {user.companyName}
                         </td>
-
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-800">
+                          {user.stallNumber || "N/A"}
+                        </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-blue-800">
-                            {user.stallNumber}
+                            {user.registrationNumber || "N/A"}
                           </div>
                         </td>
 
