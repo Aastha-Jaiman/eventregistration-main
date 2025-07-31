@@ -22,7 +22,7 @@ const Registration = ({
   setShowPopup,
   registrations,
   showPopup,
-  registrationId,
+  registrationNumber,
   preSelectedRole = null,
 }) => {
   const [currentStep, setCurrentStep] = useState(preSelectedRole ? "form" : "roleSelection");
@@ -38,6 +38,9 @@ const Registration = ({
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const [regNumber, setRegNumber] = useState("");
+
 
   const roleOptions = [
     {
@@ -91,7 +94,7 @@ const Registration = ({
       !formData.fullName ||
       !formData.firmName ||
       !formData.city ||
-      !formData.phone 
+      !formData.phone
     ) {
       setError("Please fill in all fields");
       setLoading(false);
@@ -116,10 +119,16 @@ const Registration = ({
         formData.role === "exhibitor" ? formData.stallNumber : undefined,
     };
 
+    console.log("Submitting user data:", userData);
+
     try {
       const response = await registerUser(userData);
+      setRegistrationId(response.registrationNumber);
+      setRegNumber(response.user.registrationNumber);
+      setRegNumber(response.user.registrationNumber);
+      console.log("response.user.registrationNumber" , response.user.registrationNumber)
       console.log("registered user", response);
-
+      setError(err.registrationNumber|| "Registration failed");
       setShowPopup(true);
     } catch (err) {
       setError(err.message || "Registration failed");
@@ -131,13 +140,13 @@ const Registration = ({
   const handleClosePopup = useCallback(() => {
     setFormData({
       fullName: "",
-    firmName: "",
-    firmAddress: "",
-    city: "",
-    phone: "",
-    email: "",
-    role: preSelectedRole || "",
-    stallNumber: "",
+      firmName: "",
+      firmAddress: "",
+      city: "",
+      phone: "",
+      email: "",
+      role: preSelectedRole || "",
+      stallNumber: "",
     })
     setShowPopup(false);
   }, [setShowPopup]);
@@ -157,6 +166,14 @@ const Registration = ({
           <h2 className="text-2xl font-bold text-gray-800 mb-4">
             Registration Successful!
           </h2>
+          <div className="">
+            <span className="text-green-600">Registration Number :</span>
+            <p className="text-green-600">
+              {regNumber  || "Not available"}
+            </p>
+
+          </div>
+
 
           <p className="text-sm text-gray-500 mb-6">
             A confirmation email has been sent to your registered email address.
@@ -252,6 +269,7 @@ const Registration = ({
         {error && (
           <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
             <p className="text-red-600 text-center text-sm">{error}</p>
+            <p className="text-red-600 text-center text-sm">Registration Number : {regNumber}</p>
           </div>
         )}
 
@@ -281,7 +299,7 @@ const Registration = ({
             {/* Company Name */}
             <div className="relative group">
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Company Name
+                Company Name *
               </label>
               <div className="relative">
                 <Building className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 transition-colors group-focus-within:text-teal-500" />
@@ -311,7 +329,7 @@ const Registration = ({
                   value={formData.firmAddress}
                   onChange={handleInputChange}
                   className="w-full pl-12 pr-4 py-3.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-teal-500/20 focus:border-teal-500 transition-all duration-200 bg-gray-50/50 hover:bg-white focus:bg-white"
-                 
+
                 />
               </div>
             </div>
@@ -378,7 +396,7 @@ const Registration = ({
           {formData.role === "exhibitor" && (
             <div className="relative group">
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                Stall Number *
+                Stall Number
               </label>
               <div className="relative">
                 <Hash className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 transition-colors group-focus-within:text-teal-500" />

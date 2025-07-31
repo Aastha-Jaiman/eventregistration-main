@@ -10,20 +10,9 @@ const Header = () => {
         <div className="flex justify-between items-center">
           {/* Logo Section */}
           <div className="flex items-center space-x-2 sm:space-x-4">
-            <div className="flex items-center space-x-2 sm:space-x-3">
-              <div className="relative group">
-                <img
-                  src="/JCDS LOGO 27 YEARS.jpg"
-                  alt="JCDS Logo 1"
-                  width={40}
-                  height={40}
-                  className="w-10 h-10 sm:h-12 md:w-14 md:h-14 transition-all duration-300"
-                />
-              </div>
-            </div>
             <div className="hidden sm:block">
-              <h1 className="text-lg sm:text-xl font-bold text-gray-800">
-                JCDS
+              <h1 className="text-lg sm:text-xl font-bold text-gray-800 uppercase">
+                Jaipur Catering Dealers Samiti Registered
               </h1>
               <p className="text-xs sm:text-sm text-gray-500">
                 27 Years of Excellence

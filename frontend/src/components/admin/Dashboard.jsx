@@ -62,7 +62,7 @@ const Dashboard = () => {
     try {
       const exportData = users.map((user, index) => ({
         "S.No": index + 1,
-        Email: user.email || "",
+        // Email: user.email || "",
         Role: user.role || "",
         Phone: user.phone || "",
         City: user.city || "",
@@ -99,9 +99,8 @@ const Dashboard = () => {
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
       });
 
-      const fileName = `users_data_${
-        new Date().toISOString().split("T")[0]
-      }.xlsx`;
+      const fileName = `users_data_${new Date().toISOString().split("T")[0]
+        }.xlsx`;
       saveAs(data, fileName);
     } catch (error) {
       console.error("Error exporting to Excel:", error);
@@ -127,6 +126,7 @@ const Dashboard = () => {
       city: "",
       companyName: "",
       startDate: "",
+      stallNumber: "",
       endDate: "",
     });
     setSearchTerm("");
@@ -281,11 +281,10 @@ const Dashboard = () => {
               </div>
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                className={`flex items-center space-x-2 px-6 py-3 rounded-xl font-medium transition-all duration-200 ${
-                  showFilters || hasActiveFilters
-                    ? "bg-blue-700 text-white shadow-lg shadow-blue-500/25"
-                    : "bg-blue-100 text-blue-800 hover:bg-blue-200"
-                }`}
+                className={`flex items-center space-x-2 px-6 py-3 rounded-xl font-medium transition-all duration-200 ${showFilters || hasActiveFilters
+                  ? "bg-blue-700 text-white shadow-lg shadow-blue-500/25"
+                  : "bg-blue-100 text-blue-800 hover:bg-blue-200"
+                  }`}
               >
                 <FilterIcon className="w-5 h-5" />
                 <span>Filters</span>
@@ -442,15 +441,7 @@ const Dashboard = () => {
                 <table className="w-full">
                   <thead className="bg-gradient-to-r from-blue-100/70 to-blue-100/70">
                     <tr>
-                      <th
-                        className="px-6 py-4 text-left text-xs font-medium text-blue-800 uppercase tracking-wider cursor-pointer hover:bg-blue-200/50 transition-colors"
-                        onClick={() => handleSort("email")}
-                      >
-                        <div className="flex items-center space-x-1">
-                          <span>Email</span>
-                          <SortIcon column="email" />
-                        </div>
-                      </th>
+
                       <th
                         className="px-6 py-4 text-left text-xs font-medium text-blue-800 uppercase tracking-wider cursor-pointer hover:bg-blue-200/50 transition-colors"
                         onClick={() => handleSort("role")}
@@ -490,6 +481,16 @@ const Dashboard = () => {
 
                       <th
                         className="px-6 py-4 text-left text-xs font-medium text-blue-800 uppercase tracking-wider cursor-pointer hover:bg-blue-200/50 transition-colors"
+                        onClick={() => handleSort("stallNumber")}
+                      >
+                        <div className="flex items-center space-x-1">
+                          <span>stallNumber</span>
+                          <SortIcon column="email" />
+                        </div>
+                      </th>
+
+                      <th
+                        className="px-6 py-4 text-left text-xs font-medium text-blue-800 uppercase tracking-wider cursor-pointer hover:bg-blue-200/50 transition-colors"
                         onClick={() => handleSort("createdAt")}
                       >
                         <div className="flex items-center space-x-1">
@@ -506,22 +507,16 @@ const Dashboard = () => {
                     {paginatedUsers.map((user, index) => (
                       <tr
                         key={user._id}
-                        className={`hover:bg-blue-50/50 transition-colors ${
-                          index % 2 === 0 ? "bg-white/50" : "bg-blue-25/30"
-                        }`}
+                        className={`hover:bg-blue-50/50 transition-colors ${index % 2 === 0 ? "bg-white/50" : "bg-blue-25/30"
+                          }`}
                       >
-                        <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-blue-800">
-                            {user.email}
-                          </div>
-                        </td>
+
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span
-                            className={`inline-flex px-3 py-1 rounded-full text-xs font-medium ${
-                              user.role === "admin"
-                                ? "bg-gradient-to-r from-red-100 to-red-200 text-red-800"
-                                : "bg-gradient-to-r from-blue-100 to-blue-100 text-blue-800"
-                            }`}
+                            className={`inline-flex px-3 py-1 rounded-full text-xs font-medium ${user.role === "admin"
+                              ? "bg-gradient-to-r from-red-100 to-red-200 text-red-800"
+                              : "bg-gradient-to-r from-blue-100 to-blue-100 text-blue-800"
+                              }`}
                           >
                             {user.role}
                           </span>
@@ -534,6 +529,12 @@ const Dashboard = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-800">
                           {user.companyName}
+                        </td>
+
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="text-sm text-blue-800">
+                            {user.stallNumber}
+                          </div>
                         </td>
 
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-800">

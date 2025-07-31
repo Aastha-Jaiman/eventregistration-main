@@ -17,7 +17,7 @@ export default function HeroPage() {
     <div className="relative mt-20">
 
       {/* Logo Row - No Opacity Section */}
-      <div className="absolute left-0 right-0 z-20 bg-white shadow-md px-6 py-4 opacity-90">
+      {/* <div className="absolute left-0 right-0 z-20 bg-white shadow-md px-6 py-4 opacity-90">
         <div className="flex justify-between items-center max-w-8xl mx-auto">
           <img
             src="/JCDS LOGO 27 YEARS.png"
@@ -30,7 +30,7 @@ export default function HeroPage() {
             className="h-24 object-contain"
           />
         </div>
-      </div>
+      </div> */}
 
 
       <div
@@ -62,6 +62,16 @@ export default function HeroPage() {
             {/* Main Banner Content */}
             <div className="text-center mb-12">
               {/* Badge */}
+              <div className="flex w-full justify-center items-center space-x-6">
+                <img
+                  src="/JCDS LOGO 27 YEARS.png"
+                  alt="Anupam Royals Logo"
+                  className="h-40 w-auto object-contain"
+                />
+              </div>
+              <div className="text-green-600 my-5 font-semibold text-3xl">
+                is association with
+              </div>
               {/* Anupam Royals Logo */}
               <div className="flex w-full justify-center items-center space-x-6">
                 <img
@@ -73,11 +83,20 @@ export default function HeroPage() {
               <div className="text-green-600 my-5 font-semibold text-3xl">
                 Presents
               </div>
-              <div className="inline-flex items-center bg-green-400  text-white px-8 py-3 rounded-full mb-6 shadow-lg">
+
+              <div className="inline-flex items-center bg-[#1F0954]  text-white px-8 py-3 rounded-full mb-6 shadow-lg">
                 <Sparkles className="w-5 h-5 mr-2" />
                 <span className="font-bold text-lg">
                   Largest HoReCa Exhibition of Rajasthan
                 </span>
+              </div>
+
+              <div className="flex w-full justify-center items-center space-x-6">
+                <img
+                  src="/logo1.png"
+                  alt="Anupam Royals Logo"
+                  className="h-40 w-auto object-contain"
+                />
               </div>
 
               {/* Main Title */}
@@ -100,62 +119,62 @@ export default function HeroPage() {
                 }}
               >
                 <div className="absolute inset-0 bg-white opacity-70"></div>
-<div className="relative z-10">
-  {/* Powering Sponsors Section */}
-  <div className="mb-10">
-    <h3 className="text-3xl font-bold text-gray-800 mb-6 text-center">
-      Powering Sponsors
-    </h3>
-    <div className="flex justify-center flex-wrap gap-6 sm:gap-8">
-      <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-2xl shadow-lg border-2 border-blue-200">
-        <img
-          src="/logo3.png"
-          alt="Powering Sponsor 1"
-          className="h-16 sm:h-20 md:h-24 lg:h-28 w-auto object-contain"
-        />
-      </div>
-      <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-2xl shadow-lg border-2 border-blue-200">
-        <img
-          src="/logo4.png"
-          alt="Powering Sponsor 2"
-          className="h-16 sm:h-20 md:h-24 lg:h-28 w-auto object-contain"
-        />
-      </div>
-    </div>
-  </div>
+                <div className="relative z-10">
+                  {/* Powering Sponsors Section */}
+                  <div className="mb-10">
+                    <h3 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+                      Powering Sponsors
+                    </h3>
+                    <div className="flex justify-center flex-wrap gap-6 sm:gap-8">
+                      <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-2xl shadow-lg border-2 border-blue-200">
+                        <img
+                          src="/logo3.png"
+                          alt="Powering Sponsor 1"
+                          className="h-16 sm:h-20 md:h-24 lg:h-28 w-auto object-contain"
+                        />
+                      </div>
+                      <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-2xl shadow-lg border-2 border-blue-200">
+                        <img
+                          src="/logo4.png"
+                          alt="Powering Sponsor 2"
+                          className="h-16 sm:h-20 md:h-24 lg:h-28 w-auto object-contain"
+                        />
+                      </div>
+                    </div>
+                  </div>
 
-  {/* Partners Section */}
-  <div className="border-t border-gray-200 pt-8">
-    <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
-            {/* Flareon Partner */}
-      <div className="text-center">
-        <p className="text-sm text-gray-600 mb-2 font-semibold">
-          Flareon Partner
-        </p>
-        <div className="bg-orange-50 p-4 rounded-xl shadow-md border border-orange-100">
-          <img
-            src="/powerman.png"
-            alt="Flareon Partner"
-            className="h-14 sm:h-16 md:h-20 lg:h-24 w-auto object-contain"
-          />
-        </div>
-      </div>
-      {/* Water Partner */}
-      <div className="text-center">
-        <p className="text-sm text-gray-600 mb-2 font-semibold">
-          Water Partner
-        </p>
-        <div className="bg-blue-50 p-4 rounded-xl shadow-md border border-blue-100">
-          <img
-            src="/logo5.png"
-            alt="Water Partner - Anupam Royals"
-            className="h-14 sm:h-16 md:h-20 lg:h-24 w-auto object-contain"
-          />
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+                  {/* Partners Section */}
+                  <div className="border-t border-gray-200 pt-8">
+                    <div className="flex flex-wrap justify-center gap-6 sm:gap-8">
+                      {/* Flareon Partner */}
+                      <div className="text-center">
+                        <p className="text-sm text-gray-600 mb-2 font-semibold">
+                          Flareon Partner
+                        </p>
+                        <div className="bg-orange-50 p-4 rounded-xl shadow-md border border-orange-100">
+                          <img
+                            src="/powerman.png"
+                            alt="Flareon Partner"
+                            className="h-14 sm:h-16 md:h-20 lg:h-24 w-auto object-contain"
+                          />
+                        </div>
+                      </div>
+                      {/* Water Partner */}
+                      <div className="text-center">
+                        <p className="text-sm text-gray-600 mb-2 font-semibold">
+                          Water Partner
+                        </p>
+                        <div className="bg-blue-50 p-4 rounded-xl shadow-md border border-blue-100">
+                          <img
+                            src="/logo5.png"
+                            alt="Water Partner - Anupam Royals"
+                            className="h-14 sm:h-16 md:h-20 lg:h-24 w-auto object-contain"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
               </div>
 
