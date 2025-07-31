@@ -31,6 +31,11 @@ const userSchema = new mongoose.Schema({
     stallNumber: {
         type: String,
     },
+    registrationNumber: {
+      type: String,
+      required: [true, "Registration number is required"],
+      unique: true,
+    },
 },
     { timestamps: true }
 );

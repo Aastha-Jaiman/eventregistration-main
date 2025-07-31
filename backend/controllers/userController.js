@@ -6,22 +6,26 @@ exports.registerUser = async (req, res) => {
     const { fullname, email, phone, companyName, companyAddress, city, role, stallNumber } =
       req.body;
 
-  
     if (!fullname || !phone || !companyName || !city || !role) {
       return res.status(400).json({ message: "All fields are required" });
     }
+
     if (role === "exhibitor" && !stallNumber) {
       return res
         .status(400)
         .json({ message: "Stall number is required for exhibitor role" });
     }
-    const existingUser = await User.findOne({ phone  });
+
+    const existingUser = await User.findOne({ phone });
     if (existingUser) {
       return res
         .status(409)
         .json({ message: "User with this phone number already exists" });
     }
-    // create user
+
+    const count = await User.countDocuments();
+    const uniqueRegNo = `jcds2025_${count + 1}`;
+
     const user = new User({
       fullname,
       email,
@@ -30,17 +34,20 @@ exports.registerUser = async (req, res) => {
       companyAddress,
       city,
       role,
+      registrationNumber: uniqueRegNo,
       stallNumber: role === "exhibitor" ? stallNumber : undefined,
     });
+
     await user.save();
 
     try {
       const subject = "Registration Successful";
-      const message = `Dear ${fullname},\n\nThank you for registering as a ${role}.\n\nYour registration is successful!\n\n`;
+      const message = `Dear ${fullname},\n\nThank you for registering as a ${role}.\n\nYour registration number is: ${uniqueRegNo}\n\nRegistration is successful!`;
       await sendEmail(email, subject, message);
     } catch (emailError) {
       console.error("Email send failed:", emailError.message);
     }
+
     res.status(201).json({
       message: "Registration successful!",
       user,
@@ -53,3 +60,4 @@ exports.registerUser = async (req, res) => {
     });
   }
 };
+
