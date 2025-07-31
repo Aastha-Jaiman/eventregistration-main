@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const sendEmail = require("../utils/sendMail");
 
+
 exports.registerUser = async (req, res) => {
   try {
     const { fullname, email, phone, companyName, companyAddress, city, role, stallNumber } =
@@ -17,10 +18,12 @@ exports.registerUser = async (req, res) => {
     }
 
     const existingUser = await User.findOne({ phone });
-    if (existingUser) {
-      return res
-        .status(409)
-        .json({ message: "User with this phone number already exists" });
+
+ if (existingUser) {
+      return res.status(409).json({
+        message: "User with this phone number already exists",
+        registrationNumber: existingUser.registrationNumber,
+      });
     }
 
     const count = await User.countDocuments();
@@ -60,4 +63,3 @@ exports.registerUser = async (req, res) => {
     });
   }
 };
-
