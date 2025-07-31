@@ -40,6 +40,8 @@ const Registration = ({
   const [error, setError] = useState("");
 
   const [regNumber, setRegNumber] = useState("");
+  const [errorregNumber, setErrorRegNumber] = useState("");
+
 
 
   const roleOptions = [
@@ -125,10 +127,12 @@ const Registration = ({
       const response = await registerUser(userData);
       setRegistrationId(response.registrationNumber);
       setRegNumber(response.user.registrationNumber);
-      setRegNumber(response.user.registrationNumber);
-      console.log("response.user.registrationNumber" , response.user.registrationNumber)
+      console.log("response.user.registrationNumber", response.user.registrationNumber)
       console.log("registered user", response);
-      setError(err.registrationNumber|| "Registration failed");
+      // setErrorRegNumber(err.registrationNumber || "Registration failed");
+      setErrorRegNumber(err?.response?.data?.registrationNumber || "");
+      setError(err?.response?.data?.message || "");
+
       setShowPopup(true);
     } catch (err) {
       setError(err.message || "Registration failed");
@@ -169,7 +173,7 @@ const Registration = ({
           <div className="">
             <span className="text-green-600">Registration Number :</span>
             <p className="text-green-600">
-              {regNumber  || "Not available"}
+              {regNumber || "Not available"}
             </p>
 
           </div>
@@ -269,7 +273,11 @@ const Registration = ({
         {error && (
           <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6">
             <p className="text-red-600 text-center text-sm">{error}</p>
-            <p className="text-red-600 text-center text-sm">Registration Number : {regNumber}</p>
+            {regNumber && (
+              <p className="text-red-600 text-center text-sm">
+                Registration Number: {regNumber}
+              </p>
+            )}
           </div>
         )}
 
