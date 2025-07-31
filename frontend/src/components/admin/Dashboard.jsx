@@ -23,6 +23,7 @@ import {
   FileSpreadsheetIcon,
   Hash,
   Building2Icon,
+  User,
 } from "lucide-react";
 
 const Dashboard = () => {
@@ -68,6 +69,7 @@ const Dashboard = () => {
     try {
       const exportData = users.map((user, index) => ({
         "S.No": index + 1,
+        Name: user.fullname || "",
         Role: user.role || "",
         Phone: user.phone || "",
         City: user.city || "",
@@ -289,7 +291,7 @@ const Dashboard = () => {
                   type="text"
                   value={searchTerm}
                   onChange={handleSearchChange}
-                  placeholder="Search by name, company, ID, Reg No., Stall No. ..."
+                  placeholder="Search by name, company, ID..."
                   className="w-full pl-12 pr-4 py-3 rounded-xl border border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 bg-blue-50/50 focus:bg-white"
                 />
               </div>
@@ -484,7 +486,19 @@ const Dashboard = () => {
                 <table className="w-full">
                   <thead className="bg-gradient-to-r from-blue-100/70 to-blue-100/70">
                     <tr>
+                      <th className="px-6 py-4 text-left text-xs font-medium text-blue-800 uppercase tracking-wider">
+                        Sr. No.
+                      </th>
 
+                      <th
+                        className="px-6 py-4 text-left text-xs font-medium text-blue-800 uppercase tracking-wider cursor-pointer hover:bg-blue-200/50 transition-colors"
+                        onClick={() => handleSort("fullname")}
+                      >
+                        <div className="flex items-center space-x-1">
+                          <span>Name</span>
+                          <SortIcon column="fullname" />
+                        </div>
+                      </th>
                       <th
                         className="px-6 py-4 text-left text-xs font-medium text-blue-800 uppercase tracking-wider cursor-pointer hover:bg-blue-200/50 transition-colors"
                         onClick={() => handleSort("role")}
@@ -563,6 +577,13 @@ const Dashboard = () => {
                         className={`hover:bg-blue-50/50 transition-colors ${index % 2 === 0 ? "bg-white/50" : "bg-blue-25/30"
                           }`}
                       >
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-800">
+                          {(currentPage - 1) * itemsPerPage + index + 1}
+                        </td>
+
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-800">
+                          {user.fullname}
+                        </td>
 
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span
@@ -583,14 +604,15 @@ const Dashboard = () => {
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-800">
                           {user.companyName}
                         </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-800">
-                          {user.stallNumber || "N/A"}
-                        </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-blue-800">
                             {user.registrationNumber || "N/A"}
                           </div>
                         </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-800">
+                          {user.stallNumber || "N/A"}
+                        </td>
+
 
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-blue-800">
                           {new Date(user.createdAt).toLocaleDateString()}
