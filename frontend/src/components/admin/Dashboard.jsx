@@ -25,6 +25,7 @@ import {
   Building2Icon,
   User,
 } from "lucide-react";
+import { searchAndFilterUsers } from "@/services/userServices";
 
 const Dashboard = () => {
   const [users, setUsers] = useState([]);
@@ -39,22 +40,35 @@ const Dashboard = () => {
   const [itemsPerPage] = useState(20);
 
   const [filters, setFilters] = useState({
-    role: "",
-    city: "",
-    companyName: "",
-    startDate: "",
-    endDate: "",
-    stallNumber: "",
-    registrationNumber: "",
+    search: "",    
+    role: "",      
+    city: "",       
   });
 
 
+
+  // useEffect(() => {
+  //   const fetchUsers = async () => {
+  //     try {
+  //       const token = localStorage.getItem("adminToken");
+  //       const data = await getAllUsers(token, filters);
+  //       console.log("users", data);
+  //       setUsers(data.users);
+  //     } catch (err) {
+  //       setError("Failed to load users. Please try again.");
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchUsers();
+  // }, [filters]);
+
+
   useEffect(() => {
+    setLoading(true);
     const fetchUsers = async () => {
       try {
-        const token = localStorage.getItem("adminToken");
-        const data = await getAllUsers(token, filters);
-        console.log("users", data);
+        const data = await searchAndFilterUsers(filters);
         setUsers(data.users);
       } catch (err) {
         setError("Failed to load users. Please try again.");
@@ -64,6 +78,8 @@ const Dashboard = () => {
     };
     fetchUsers();
   }, [filters]);
+
+
 
   const handleExportToExcel = () => {
     try {
@@ -131,23 +147,22 @@ const Dashboard = () => {
     setSearchTerm(value);
     setFilters((prev) => ({
       ...prev,
-      companyName: value,
+      search: value, 
     }));
     setCurrentPage(1);
   };
 
+
   const clearFilters = () => {
     setFilters({
+      search: "",
       role: "",
       city: "",
-      companyName: "",
-      startDate: "",
-      stallNumber: "",
-      endDate: "",
     });
     setSearchTerm("");
     setCurrentPage(1);
   };
+
 
   const handleSort = (key) => {
     let direction = "asc";
@@ -283,7 +298,7 @@ const Dashboard = () => {
         </div>
 
 
-{/* search and filter */}
+        {/* search and filter */}
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-blue-200/50 mb-8 overflow-hidden">
           <div className="p-6 border-b border-blue-200/50">
             <div className="flex items-center space-x-4">
@@ -293,7 +308,7 @@ const Dashboard = () => {
                   type="text"
                   value={searchTerm}
                   onChange={handleSearchChange}
-                  placeholder="Search by name, company, ID..."
+                  placeholder="Search by name, registration number, mobile num..."
                   className="w-full pl-12 pr-4 py-3 rounded-xl border border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 bg-blue-50/50 focus:bg-white"
                 />
               </div>
@@ -343,7 +358,7 @@ const Dashboard = () => {
                     className="w-full px-4 py-2 rounded-lg border border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 bg-white/70"
                   >
                     <option value="">All Roles</option>
-                    
+
                     <option value="visitor">Visitor</option>
                     <option value="exhibitor">Exhibitor</option>
                     <option value="organizer">Organizer</option>
@@ -351,61 +366,61 @@ const Dashboard = () => {
                 </div>
 
                 {/* <div className="space-y-2">
-                  <label className="flex items-center space-x-2 text-sm font-medium text-blue-800">
-                    <CalendarIcon className="w-4 h-4" />
-                    <span>Start Date</span>
-                  </label>
-                  <input
-                    type="date"
-                    name="startDate"
-                    value={filters.startDate}
-                    onChange={handleFilterChange}
-                    className="w-full px-4 py-2 rounded-lg border border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 bg-white/70"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="flex items-center space-x-2 text-sm font-medium text-blue-800">
-                    <Building2Icon className="w-4 h-4" />
-                    <span>Stall Number</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="stallNumber"
-                    value={filters.stallNumber}
-                    onChange={handleFilterChange}
-                    placeholder="Enter stall number"
-                    className="w-full px-4 py-2 rounded-lg border border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 bg-white/70"
-                  />
-                </div>
+                    <label className="flex items-center space-x-2 text-sm font-medium text-blue-800">
+                      <CalendarIcon className="w-4 h-4" />
+                      <span>Start Date</span>
+                    </label>
+                    <input
+                      type="date"
+                      name="startDate"
+                      value={filters.startDate}
+                      onChange={handleFilterChange}
+                      className="w-full px-4 py-2 rounded-lg border border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 bg-white/70"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <label className="flex items-center space-x-2 text-sm font-medium text-blue-800">
+                      <Building2Icon className="w-4 h-4" />
+                      <span>Stall Number</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="stallNumber"
+                      value={filters.stallNumber}
+                      onChange={handleFilterChange}
+                      placeholder="Enter stall number"
+                      className="w-full px-4 py-2 rounded-lg border border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 bg-white/70"
+                    />
+                  </div>
 
-                <div className="space-y-2">
-                  <label className="flex items-center space-x-2 text-sm font-medium text-blue-800">
-                    <Hash className="w-4 h-4" />
-                    <span>Registration No.</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="registrationNumber"
-                    value={filters.registrationNumber}
-                    onChange={handleFilterChange}
-                    placeholder="Enter registration number"
-                    className="w-full px-4 py-2 rounded-lg border border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 bg-white/70"
-                  />
-                </div>
+                  <div className="space-y-2">
+                    <label className="flex items-center space-x-2 text-sm font-medium text-blue-800">
+                      <Hash className="w-4 h-4" />
+                      <span>Registration No.</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="registrationNumber"
+                      value={filters.registrationNumber}
+                      onChange={handleFilterChange}
+                      placeholder="Enter registration number"
+                      className="w-full px-4 py-2 rounded-lg border border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 bg-white/70"
+                    />
+                  </div>
 
-                <div className="space-y-2">
-                  <label className="flex items-center space-x-2 text-sm font-medium text-blue-800">
-                    <CalendarIcon className="w-4 h-4" />
-                    <span>End Date</span>
-                  </label>
-                  <input
-                    type="date"
-                    name="endDate"
-                    value={filters.endDate}
-                    onChange={handleFilterChange}
-                    className="w-full px-4 py-2 rounded-lg border border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 bg-white/70"
-                  />
-                </div> */}
+                  <div className="space-y-2">
+                    <label className="flex items-center space-x-2 text-sm font-medium text-blue-800">
+                      <CalendarIcon className="w-4 h-4" />
+                      <span>End Date</span>
+                    </label>
+                    <input
+                      type="date"
+                      name="endDate"
+                      value={filters.endDate}
+                      onChange={handleFilterChange}
+                      className="w-full px-4 py-2 rounded-lg border border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 bg-white/70"
+                    />
+                  </div> */}
               </div>
 
               {hasActiveFilters && (
@@ -427,7 +442,7 @@ const Dashboard = () => {
         </div>
 
 
-{/* list */}
+        {/* list */}
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-blue-200/50 overflow-hidden">
           <div className="p-6 border-b border-blue-200/50 bg-gradient-to-r from-blue-50/50 to-blue-50/50">
             <div className="flex items-center justify-between">
