@@ -249,7 +249,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white ml-20 mr-20">
+    <div className="min-h-screen bg-white ">
       <div className="container mx-auto px-6 py-8">
         <div className="mb-8">
           <div className="flex items-center justify-between">
