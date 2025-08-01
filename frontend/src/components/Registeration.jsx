@@ -156,6 +156,7 @@ const Registration = ({
       stallNumber: "",
     })
     setShowPopup(false);
+    setCurrentStep("roleSelection");
   }, [setShowPopup]);
 
   const handleChangeRole = useCallback(() => {

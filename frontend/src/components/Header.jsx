@@ -12,7 +12,7 @@ const Header = () => {
           <div className="flex items-center space-x-2 sm:space-x-4">
             <div className="block">
               <h1 className="text-base sm:text-xl font-bold text-gray-800 uppercase">
-                Jaipur Catering Dealers Samiti Registered
+                Jaipur Catering Dealers Samiti ( Registration )
               </h1>
               <p className="text-xs sm:text-sm text-gray-500">
                 27 Years of Excellence

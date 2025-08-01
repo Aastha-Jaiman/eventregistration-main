@@ -36,7 +36,7 @@ const Dashboard = () => {
   const [showModal, setShowModal] = useState(false);
   const [sortConfig, setSortConfig] = useState({ key: null, direction: "asc" });
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(20);
 
   const [filters, setFilters] = useState({
     role: "",
@@ -282,6 +282,8 @@ const Dashboard = () => {
           })}
         </div>
 
+
+{/* search and filter */}
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-blue-200/50 mb-8 overflow-hidden">
           <div className="p-6 border-b border-blue-200/50">
             <div className="flex items-center space-x-4">
@@ -341,14 +343,14 @@ const Dashboard = () => {
                     className="w-full px-4 py-2 rounded-lg border border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 bg-white/70"
                   >
                     <option value="">All Roles</option>
-                    <option value="admin">Admin</option>
+                    
                     <option value="visitor">Visitor</option>
-                    <option value="executive">Executive</option>
+                    <option value="exhibitor">Exhibitor</option>
                     <option value="organizer">Organizer</option>
                   </select>
                 </div>
 
-                <div className="space-y-2">
+                {/* <div className="space-y-2">
                   <label className="flex items-center space-x-2 text-sm font-medium text-blue-800">
                     <CalendarIcon className="w-4 h-4" />
                     <span>Start Date</span>
@@ -403,7 +405,7 @@ const Dashboard = () => {
                     onChange={handleFilterChange}
                     className="w-full px-4 py-2 rounded-lg border border-blue-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-200 bg-white/70"
                   />
-                </div>
+                </div> */}
               </div>
 
               {hasActiveFilters && (
@@ -424,6 +426,8 @@ const Dashboard = () => {
           )}
         </div>
 
+
+{/* list */}
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-blue-200/50 overflow-hidden">
           <div className="p-6 border-b border-blue-200/50 bg-gradient-to-r from-blue-50/50 to-blue-50/50">
             <div className="flex items-center justify-between">
