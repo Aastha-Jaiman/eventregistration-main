@@ -63,3 +63,50 @@ exports.registerUser = async (req, res) => {
     });
   }
 };
+
+exports.searchAndFilterUsers = async (req, res) => {
+  try {
+    const { search = "", role, city } = req.query;
+
+    const query = {
+      $and: [],
+    };
+
+    if (search) {
+      const searchRegex = new RegExp(search, "i");
+      query.$and.push({
+        $or: [
+          { fullname: searchRegex },
+          { phone: searchRegex },
+          { registrationNumber: searchRegex },
+        ],
+      });
+    }
+
+    if (role) {
+      query.$and.push({ role });
+    }
+    
+    if (city) {
+      query.$and.push({ city });
+    }
+
+    if (query.$and.length === 0) {
+      delete query.$and;
+    }
+
+    const users = await User.find(query).sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      count: users.length,
+      users,
+    });
+  } catch (error) {
+    console.error("Error searching/filtering users:", error.message);
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
