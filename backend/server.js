@@ -7,7 +7,8 @@ require("dotenv").config();
 
 app.use(
   cors({
-    origin: ["https://jcds3.vercel.app","http://localhost:3000"], 
+    origin: ["https://jaipurcateringdealerssamiti.com","https://www.jaipurcateringdealerssamiti.com"], 
+    // "https://jcds3.vercel.app","http://localhost:3000","https://jcds-registration.vercel.app",
     credentials: true,
   })
 );
